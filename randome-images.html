@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script>
+  //このhtmlは、配列で設定された画像ファイル群から、ランダムなものを一つ選び、Blobとして返すものである。
+  //github pages上で動作し、リポジトリにある同一階層内のimages/以下にある画像をランダムに選び、blobとしてブラウザーに返します。
+
+  const images = [
+            "images/1.png",
+            "images/2.png",
+            "images/3.png",
+            "images/4.png",
+            "images/5.png",
+            "images/6.png",
+          ];
+
+  //pick up random image
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    console.log(randomImage);
+
+    //create blob
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", randomImage, true);
+    xhr.responseType = "blob";
+    xhr.onload = function() {
+      if (this.status === 200) {
+        const blob = this.response;
+        const img = document.createElement("img");
+        img.src = window.URL.createObjectURL(blob);
+        document.body.appendChild(img);
+      }
+    };
+    xhr.send();
+</script>
+</html>
